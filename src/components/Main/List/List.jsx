@@ -2,27 +2,30 @@ import { useEffect, useRef } from 'react';
 import cls from './List.module.css';
 import Post from './Post';
 import { useDispatch, useSelector } from 'react-redux';
-import { postRequestAsync } from '../../../store/posts/postsActions';
 import { Preloader } from '../../../UI/Preloader/Preloader';
 import { Outlet, useParams } from 'react-router-dom';
+import { postsRequestAsync } from '../../../store/posts/postsActions';
 
 export const List = () => {
-  const posts = useSelector(state => state.posts.data);
+  const posts = useSelector(state => state.posts.posts);
   const loading = useSelector(state => state.posts.loading);
   const after = useSelector(state => state.posts.after);
+  //   const postListTest = useSelector(state => state.postListReducer);
+
+  console.log('posts', posts);
   const endList = useRef(null);
   const dispatch = useDispatch();
   const { page } = useParams();
 
   useEffect(() => {
-    dispatch(postRequestAsync(page));
+    dispatch(postsRequestAsync(page));
   }, [page]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
         if (entries[0].isIntersecting) {
-          dispatch(postRequestAsync());
+          dispatch(postsRequestAsync());
         }
       },
       {
