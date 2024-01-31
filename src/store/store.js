@@ -7,6 +7,7 @@ import { postsReducer } from './posts/postsReducer';
 
 import { configureStore } from '@reduxjs/toolkit';
 import postDataSlice from './postData/postDataSlice';
+import { postListSlice } from './PostList/PostListSlice';
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     auth: authReducer,
     posts: postsReducer,
     postData: postDataSlice,
+    postListReducer: postListSlice.reducer,
   },
 
   middleware: getDefaultMiddleware =>
